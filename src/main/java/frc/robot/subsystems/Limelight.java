@@ -30,10 +30,11 @@ public class Limelight extends SubsystemBase {
     double limelightMountAngleDegrees = 0;
 
     // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 34.5;
+    double limelightLensHeightInches = 24.0;
 
     // distance from the target to the floor
-    double goalHeightInches = 43.0;
+    double goalHeightInches = 23.5;
+    
 
     double angleToGoalDegrees = limelightMountAngleDegrees + ty;
     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
