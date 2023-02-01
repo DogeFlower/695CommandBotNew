@@ -6,13 +6,18 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.Button1Command;
+import frc.robot.commands.Button2Command;
+import frc.robot.commands.Y_AxisCommand;
+import frc.robot.subsystems.Button1_Subsystem;
+import frc.robot.subsystems.Button2_Subsystem;
+import frc.robot.subsystems.Y_Axis_Subsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
  
 /**
@@ -23,13 +28,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+  private final Button1_Subsystem m_Button1_Subsystem = new Button1_Subsystem();
+  private final Button2_Subsystem m_Button2_Subsystem = new Button2_Subsystem();
+  private final Y_Axis_Subsystem m_Y_Axis_Subsystem = new Y_Axis_Subsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final Joystick joystick1 = new Joystick(0);
-
+  public final Joystick m_APAC_Board = new Joystick(0);
+  private final JoystickButton m_joystick1_button1 = new JoystickButton(m_APAC_Board, 1);
+  private final JoystickButton m_joystick1_button2 = new JoystickButton(m_APAC_Board, 2);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer() 
+  {
+    m_joystick1_button1.whileTrue(new Button1Command(m_Button1_Subsystem));
+    m_joystick1_button2.whileTrue(new Button2Command(m_Button2_Subsystem));
+    SmartDashboard.putNumber("Y_Axis", m_APAC_Board.getRawAxis(1));
+    
     // Configure the trigger bindings
    // configureBindings();
   }
@@ -60,9 +73,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(m_Button1_Subsystem);
   }
-  protected void execute() {
-    SmartDashboard.putBoolean("Button Seal", joystick1.getRawButton(0));
-  }
+
+
+  
 }
